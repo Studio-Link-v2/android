@@ -7,13 +7,16 @@ android {
         applicationId "link.studio.app"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 17100
+        versionName "17.10.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
                 cppFlags ""
             }
+        }
+        ndk {
+            abiFilters 'armeabi-v7a'
         }
     }
     buildTypes {
