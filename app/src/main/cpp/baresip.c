@@ -5,6 +5,8 @@
 #include <re.h>
 #include <baresip.h>
 
+void webapp_account_get(char *user);
+
 #define LOGD(...) \
   ((void)__android_log_print(ANDROID_LOG_DEBUG, "Baresip", __VA_ARGS__))
 
@@ -136,11 +138,31 @@ out:
         LOGE("error: (%d)\n", err);
     }
 
+
+
+    return;
+}
+
+JNIEXPORT void JNICALL
+Java_link_studio_app_MainActivity_baresipStop1(JNIEnv *env, jobject thiz)
+{
+    LOGD("Stop all ua ...\n");
+    ua_stop_all(false);
+
+    return;
+}
+
+JNIEXPORT void JNICALL
+Java_link_studio_app_MainActivity_baresipStop2(JNIEnv *env, jobject thiz)
+{
+
+    LOGD("Close ua ...\n");
+    ua_close();
     LOGD("closing");
     conf_close();
     baresip_close();
     mod_close();
-    /* libre_close(); */
+    libre_close();
 
     tmr_debug();
     mem_debug();
@@ -148,13 +170,12 @@ out:
     return;
 }
 
-JNIEXPORT void JNICALL
-Java_link_studio_app_MainActivity_baresipStop(JNIEnv *env, jobject thiz)
-{
-    LOGD("Stop all ua ...\n");
-    ua_stop_all(false);
-    LOGD("Close ua ...\n");
-    ua_close();
 
-    return;
+JNIEXPORT jstring JNICALL
+Java_link_studio_app_MainActivity_getAccount( JNIEnv *env, jobject thiz)
+{
+    char user[100] = {0};
+
+    webapp_account_get(user);
+    return (*env)->NewStringUTF(env, user);
 }
